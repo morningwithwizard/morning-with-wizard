@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://s3.tradingview.com; frame-src https://s.tradingview.com https://www.tradingview-widget.com; img-src 'self' data:;">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<title>Morning With Wizard — The Market Wizards Daily Intelligence Briefing</title>
+<meta name="description" content="Daily market intelligence briefing covering crypto, precious metals, macro, and AI. Published by The Market Wizards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #6B1525;
+    --maroon-light: #8B2035;
+    --gold: #C9A96E;
+    --gold-light: #D4B97E;
+    --dark: #1A1A1A;
+    --body: #3D3D3D;
+    --muted: #888888;
+    --light-bg: #F9F8F6;
+    --border: #E5E2DE;
+    --white: #FFFFFF;
+    --green: #0E7A3A;
+    --red: #C0392B;
+    --green-bg: #E8F5E9;
+    --red-bg: #FFEBEE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--light-bg);
+    color: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === MASTHEAD === */
+  .masthead {
+    background: var(--white);
+    border-top: 5px solid var(--maroon);
+    padding: 0;
+  }
+
+  .masthead-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+  }
+
+  .edition-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .edition-bar a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .masthead-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(36px, 7vw, 56px);
+    font-weight: 900;
+    color: var(--dark);
+    text-align: center;
+    padding: 20px 0 8px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .masthead-tagline {
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 16px;
+  }
+
+  .double-rule {
+    border: none;
+    border-top: 1px solid var(--maroon);
+    border-bottom: 3px solid var(--maroon);
+    height: 6px;
+    margin: 0;
+  }
+
+  /* === MAIN CONTENT === */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+    background: var(--white);
+  }
+
+  /* === MOOD BANNER === */
+  .mood {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mood-verdict {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--red);
+    display: inline;
+  }
+
+  .mood-text {
+    font-size: 15px;
+    color: var(--body);
+    line-height: 1.65;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(22px, 3.5vw, 28px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+
+  .body-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--body);
+    margin-bottom: 12px;
+  }
+
+  .bold-lead {
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  /* === MARKET TABLE === */
+  .market-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .market-table thead th {
+    background: var(--maroon);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .market-table tbody tr:nth-child(odd) { background: var(--light-bg); }
+  .market-table tbody tr:nth-child(even) { background: var(--white); }
+
+  .market-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .market-table .asset-name {
+    font-weight: 600;
+    color: var(--dark);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+
+  .market-table .price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+
+  .change-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .change-pill.up { background: var(--green-bg); color: var(--green); }
+  .change-pill.down { background: var(--red-bg); color: var(--red); }
+
+  /* === CALLOUT BOX === */
+  .callout {
+    background: var(--light-bg);
+    border-left: 4px solid var(--maroon);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--body);
+    margin-bottom: 4px;
+  }
+
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* === EVENTS TABLE === */
+  .events-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+
+  .events-table thead th {
+    background: var(--maroon);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .events-table tbody tr:nth-child(odd) { background: var(--light-bg); }
+  .events-table tbody tr:nth-child(even) { background: var(--white); }
+
+  .events-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .impact-high {
+    display: inline-block;
+    background: var(--red-bg);
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .impact-medium {
+    display: inline-block;
+    background: #FFF8E1;
+    color: #F59E0B;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* === QUOTE === */
+  .wisdom-quote {
+    text-align: center;
+    padding: 32px 40px;
+    position: relative;
+  }
+
+  .wisdom-quote blockquote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(18px, 3vw, 22px);
+    font-style: italic;
+    color: var(--maroon);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .wisdom-quote cite {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .wisdom-commentary {
+    max-width: 680px;
+    margin: 12px auto 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* === BOTTOM LINE === */
+  .bottom-line {
+    background: linear-gradient(135deg, #F9F8F6 0%, #F5F0EB 100%);
+    padding: 28px;
+    border-radius: 4px;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+  }
+
+  /* === CTA === */
+  .cta-section {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--maroon);
+    border-top: 3px solid var(--gold);
+  }
+
+  .cta-section h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 40px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  /* === FOOTER === */
+  .footer {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+
+  .footer-handles {
+    font-size: 12px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .footer-handles a { color: var(--gold); text-decoration: none; }
+  .footer-handles a:hover { text-decoration: underline; }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: #BBBBBB;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* === FEAR & GREED GAUGE === */
+  .fear-gauge {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    margin-bottom: 8px;
+  }
+
+  .gauge-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: conic-gradient(var(--red) 0% 12%, #E0E0E0 12% 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .gauge-inner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--red);
+  }
+
+  .gauge-text h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .gauge-text p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 640px) {
+    .masthead-inner, .content { padding-left: 16px; padding-right: 16px; }
+    .edition-bar { flex-direction: column; gap: 4px; text-align: center; }
+    .market-table, .events-table { font-size: 12px; }
+    .market-table thead th, .events-table thead th { padding: 8px 8px; font-size: 10px; }
+    .market-table tbody td, .events-table tbody td { padding: 8px 8px; }
+    .wisdom-quote { padding: 24px 16px; }
+    .cta-section { padding: 32px 16px; }
+    .section { padding: 24px 0; }
+  }
+
+  /* === SCROLL ANIMATION === */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* === ANNOUNCEMENT BAR === */
+  .announcement-bar {
+    background: var(--maroon);
+    text-align: center;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.03em;
+  }
+
+  .announcement-bar span {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .announcement-bar .pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  /* === LIVE TICKER BAR === */
+  .ticker-wrap {
+    background: var(--dark);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+  }
+
+  .ticker-track {
+    display: inline-flex;
+    animation: ticker-scroll 30s linear infinite;
+  }
+
+  .ticker-track:hover { animation-play-state: paused; }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #CCCCCC;
+  }
+
+  .ticker-item .ticker-symbol {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .ticker-item .ticker-price {
+    color: var(--white);
+  }
+
+  .ticker-item .ticker-change {
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .ticker-item .ticker-change.up {
+    background: rgba(14, 122, 58, 0.2);
+    color: #4CAF50;
+  }
+
+  .ticker-item .ticker-change.down {
+    background: rgba(192, 57, 43, 0.2);
+    color: #EF5350;
+  }
+
+  .ticker-item .ticker-sep {
+    color: #444;
+    margin: 0 4px;
+  }
+
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* === TRADINGVIEW CHARTS === */
+  .chart-container {
+    margin: 16px 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .chart-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin: 16px 0 0;
+  }
+
+  .chart-tab {
+    padding: 8px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+
+  .chart-tab:hover { color: var(--dark); }
+
+  .chart-tab.active {
+    color: var(--maroon);
+    border-bottom-color: var(--maroon);
+  }
+
+  .chart-panel { display: none; }
+  .chart-panel.active { display: block; }
+
+  /* === ASSET NAV === */
+  .asset-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .asset-nav a {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    color: var(--body);
+  }
+
+  .asset-nav a:hover, .asset-nav a.active {
+    background: var(--maroon);
+    color: var(--white);
+    border-color: var(--maroon);
+  }
+
+  .gate-btn {
+    display: inline-block;
+    background: var(--maroon);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 36px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .gate-btn:hover {
+    background: var(--maroon-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(107, 21, 37, 0.25);
+  }
+
+  .gate-subtext {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  .gate-subtext a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+  <span class="pulse-dot"></span>
+  Fresh briefing published <span>every morning at 8:00 AM Dubai time</span> &mdash; powered by AI market intelligence
+</div>
+
+<!-- LIVE TICKER BAR -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-symbol">BTC</span> <span class="ticker-price">$70,314</span> <span class="ticker-change up">+4.31%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">ETH</span> <span class="ticker-price">$2,075</span> <span class="ticker-change up">+5.49%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">SOL</span> <span class="ticker-price">$86.63</span> <span class="ticker-change up">+4.51%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">GOLD</span> <span class="ticker-price">$5,145</span> <span class="ticker-change up">+0.86%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">SILVER</span> <span class="ticker-price">$87.90</span> <span class="ticker-change up">+16.3%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">OIL</span> <span class="ticker-price">$98.50</span> <span class="ticker-change up">+47.6%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">DXY</span> <span class="ticker-price">99.20</span> <span class="ticker-change down">-0.27%</span></div>
+    <div class="ticker-item"><span class="ticker-sep">|</span> <span style="color: #EF5350; font-weight: 600;">FEAR &amp; GREED: 8</span> <span style="color: #888;">Extreme Fear</span></div>
+    <!-- Duplicate for seamless scroll -->
+    <div class="ticker-item"><span class="ticker-symbol">BTC</span> <span class="ticker-price">$70,314</span> <span class="ticker-change up">+4.31%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">ETH</span> <span class="ticker-price">$2,075</span> <span class="ticker-change up">+5.49%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">SOL</span> <span class="ticker-price">$86.63</span> <span class="ticker-change up">+4.51%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">GOLD</span> <span class="ticker-price">$5,145</span> <span class="ticker-change up">+0.86%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">SILVER</span> <span class="ticker-price">$87.90</span> <span class="ticker-change up">+16.3%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">OIL</span> <span class="ticker-price">$98.50</span> <span class="ticker-change up">+47.6%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">DXY</span> <span class="ticker-price">99.20</span> <span class="ticker-change down">-0.27%</span></div>
+    <div class="ticker-item"><span class="ticker-sep">|</span> <span style="color: #EF5350; font-weight: 600;">FEAR &amp; GREED: 8</span> <span style="color: #888;">Extreme Fear</span></div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="edition-bar">
+      <span>Edition #248</span>
+      <span>Tuesday, March 10, 2026</span>
+      <a href="archive.html" style="color: var(--maroon); font-weight: 600;">Browse Archive &rarr;</a>
+    </div>
+    <h1 class="masthead-title">Morning With Wizard</h1>
+    <p class="masthead-tagline">The Market Wizards &bull; Daily Intelligence Briefing</p>
+  </div>
+  <hr class="double-rule">
+</header>
+
+<main class="content">
+
+  <!-- TODAY'S MOOD -->
+  <div class="mood fade-in">
+    <span class="mood-verdict">Geopolitical Shock Drives Safe Havens. </span>
+    <span class="mood-text">Iran tensions and the Strait of Hormuz crisis are driving the market narrative. Oil exploded to $98.50, silver spiked 16.3% as a safe haven, gold breached $5,145, and crypto bounced hard with BTC surging above $70K as shorts got liquidated. The Fear & Greed Index pulled back to 8 from 12&mdash;some panic is unwinding, but geopolitical uncertainty remains the dominant force.</span>
+  </div>
+
+  <!-- MARKET SNAPSHOT -->
+  <div class="section fade-in">
+    <div class="section-label">Market Snapshot</div>
+
+    <div class="fear-gauge">
+      <div class="gauge-circle" style="background: conic-gradient(var(--red) 0% 8%, #E0E0E0 8% 100%);"><div class="gauge-inner">8</div></div>
+      <div class="gauge-text">
+        <h4>Extreme Fear</h4>
+        <p>Down from 12 &bull; Shorts liquidated</p>
+      </div>
+    </div>
+
+    <table class="market-table">
+      <thead>
+        <tr><th>Asset</th><th>Price</th><th>24h</th><th>7d / Note</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="asset-name">BTC</td>
+          <td class="price">$70,314</td>
+          <td><span class="change-pill up">+4.31%</span></td>
+          <td class="up">Shorts liquidated</td>
+        </tr>
+        <tr>
+          <td class="asset-name">ETH</td>
+          <td class="price">$2,075</td>
+          <td><span class="change-pill up">+5.49%</span></td>
+          <td class="up">Following BTC</td>
+        </tr>
+        <tr>
+          <td class="asset-name">SOL</td>
+          <td class="price">$86.63</td>
+          <td><span class="change-pill up">+4.51%</span></td>
+          <td class="up">Crypto bounce</td>
+        </tr>
+        <tr>
+          <td class="asset-name">GOLD</td>
+          <td class="price">$5,145</td>
+          <td><span class="change-pill up">+0.86%</span></td>
+          <td class="up">Safe haven bid</td>
+        </tr>
+        <tr>
+          <td class="asset-name">SILVER</td>
+          <td class="price">$87.90</td>
+          <td><span class="change-pill up">+16.3%</span></td>
+          <td class="up">Iran/Hormuz spike</td>
+        </tr>
+        <tr>
+          <td class="asset-name">OIL (WTI)</td>
+          <td class="price">$98.50</td>
+          <td><span class="change-pill up">+47.6%</span></td>
+          <td class="up">Strait closure</td>
+        </tr>
+        <tr>
+          <td class="asset-name">DXY</td>
+          <td class="price">99.20</td>
+          <td><span class="change-pill down">-0.27%</span></td>
+          <td>Risk-off pullback</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRYPTOCURRENCY -->
+  <div class="section fade-in">
+    <div class="section-label">Cryptocurrency</div>
+    <h2 class="section-headline">Bitcoin Rebounds Above $70K as Shorts Get Liquidated</h2>
+
+    <p class="body-text"><span class="bold-lead">Short Squeeze Ignited.</span> BTC surged 4.31% to $70,314 as shorts trapped below $68,500 got liquidated en masse. Over $500M in short positions were closed in a single push, triggering a cascade of forced buy-ins. The bounce is visceral and technical: every short close is a new buyer.</p>
+
+    <p class="body-text"><span class="bold-lead">Macro Reset.</span> The sharp move higher coincides with risk sentiment rolling over on Iran/Strait of Hormuz news. While traditional risk assets (S&P 500, DXY) are struggling, BTC benefits from its status as a pseudo-safe haven in moments of chaos. Oil at $98 makes geopolitical premium real.</p>
+
+    <p class="body-text"><span class="bold-lead">ETH and SOL Follow.</span> Ethereum jumped 5.49% to $2,075 and Solana shot 4.51% to $86.63, tracking the BTC bounce. Alt-season momentum is building. A move through $2,100 on ETH could signal institutional re-entry.</p>
+
+    <p class="body-text"><span class="bold-lead">Whale Accumulation Continues.</span> On-chain data shows major wallets aggressively accumulating during weakness. The institutional playbook is clear: buy panic, sell conviction.</p>
+
+    <div class="callout">
+      <div class="callout-title">&#9654; Key Levels</div>
+      <p><strong>BTC</strong> &mdash; Support: $68,000 | Resistance: $72,000&ndash;$73,000</p>
+      <p><strong>ETH</strong> &mdash; Support: $2,000 | Resistance: $2,150</p>
+      <p><strong>SOL</strong> &mdash; Support: $84 | Resistance: $95</p>
+    </div>
+
+    <!-- CRYPTO CHARTS -->
+    <div class="chart-tabs">
+      <button class="chart-tab active" onclick="showChart('crypto','btc',this)">BTC</button>
+      <button class="chart-tab" onclick="showChart('crypto','eth',this)">ETH</button>
+      <button class="chart-tab" onclick="showChart('crypto','sol',this)">SOL</button>
+    </div>
+    <div id="crypto-btc" class="chart-panel active">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=BINANCE:BTCUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=morningwithwizard.com" style="width:100%;height:400px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <div id="crypto-eth" class="chart-panel">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=BINANCE:ETHUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=morningwithwizard.com" style="width:100%;height:400px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <div id="crypto-sol" class="chart-panel">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=BINANCE:SOLUSDT&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=morningwithwizard.com" style="width:100%;height:400px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRECIOUS METALS -->
+  <div class="section fade-in">
+    <div class="section-label">Precious Metals</div>
+    <h2 class="section-headline">Gold Surges Past $5,145 — Silver Explodes 16% on Strait of Hormuz Crisis</h2>
+
+    <p class="body-text"><span class="bold-lead">Safe Haven Stampede.</span> Gold is up 0.86% to $5,145 as Iran tensions and the Strait of Hormuz closure drive capital into precious metals. Every headline of escalation adds another $20&ndash;$40 per ounce. Central banks and institutional portfolios are repricing geopolitical risk, and gold is the ultimate hedge.</p>
+
+    <p class="body-text"><span class="bold-lead">Silver&rsquo;s Explosion.</span> Silver exploded 16.3% to $87.90&mdash;the most violent move in this asset class in weeks. The Gold/Silver ratio compressed to 58.53, reflecting silver&rsquo;s dual nature: it&rsquo;s both a monetary metal (safe haven) and an industrial commodity (benefiting from supply fears in the Middle East). Refineries in the region could face disruption.</p>
+
+    <p class="body-text"><span class="bold-lead">Strategic Demand.</span> Military supply concerns and central bank diversification are adding fuel to the rally. If oil breaches $100&ndash;$110, precious metals could see another leg higher as inflation concerns resurface.</p>
+
+    <div class="callout">
+      <div class="callout-title">&#9654; Key Levels</div>
+      <p><strong>Gold</strong> &mdash; Support: $5,100 | Resistance: $5,250 | Target: $5,500</p>
+      <p><strong>Silver</strong> &mdash; Support: $85 | Resistance: $92 | Ratio: 58.53</p>
+    </div>
+
+    <!-- METALS & OIL CHARTS -->
+    <div class="chart-tabs">
+      <button class="chart-tab active" onclick="showChart('metals','gold',this)">Gold</button>
+      <button class="chart-tab" onclick="showChart('metals','silver',this)">Silver</button>
+      <button class="chart-tab" onclick="showChart('metals','oil',this)">Oil (WTI)</button>
+    </div>
+    <div id="metals-gold" class="chart-panel active">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=OANDA:XAUUSD&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&locale=en&utm_source=morningwithwizard.com" style="width:100%;height:400px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <div id="metals-silver" class="chart-panel">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=OANDA:XAGUSD&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&locale=en&utm_source=morningwithwizard.com" style="width:100%;height:400px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <div id="metals-oil" class="chart-panel">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_chart&symbol=TVC:USOIL&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&locale=en&utm_source=morningwithwizard.com" style="width:100%;height:400px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY EVENTS -->
+  <div class="section fade-in">
+    <div class="section-label">Key Events &amp; Catalysts</div>
+    <h2 class="section-headline">CPI Tomorrow — Iran Crisis Overshadows All Macro Data</h2>
+
+    <p class="body-text">Tuesday's CPI print (forecast: 2.2% YoY) could normally move markets, but today geopolitical risk is the dominant variable. If inflation prints hot, the Fed is locked in a corner: raise rates into a Middle East crisis? If it prints cool, it won't matter if oil is at $100. The Strait of Hormuz closure is rewriting the playbook for this week.</p>
+
+    <table class="events-table">
+      <thead>
+        <tr><th>Date</th><th>Event</th><th>Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mar 10</td><td>UK Monthly GDP</td><td><span class="impact-medium">MEDIUM</span></td></tr>
+        <tr><td>Mar 11</td><td>US CPI (YoY forecast 2.2%)</td><td><span class="impact-high">HIGH</span></td></tr>
+        <tr><td>Mar 11</td><td>Core CPI (MoM forecast 0.2%)</td><td><span class="impact-high">HIGH</span></td></tr>
+        <tr><td>Mar 12</td><td>Eurozone Industrial Production</td><td><span class="impact-medium">MEDIUM</span></td></tr>
+        <tr><td>Mar 13</td><td>US Q4 GDP (2nd Estimate)</td><td><span class="impact-high">HIGH</span></td></tr>
+        <tr><td>Mar 14</td><td>U. of Michigan Consumer Sentiment</td><td><span class="impact-medium">MEDIUM</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- AI & ROBOTICS -->
+  <div class="section fade-in">
+    <div class="section-label">AI &amp; Robotics Intelligence</div>
+    <h2 class="section-headline">Neura Robotics Raises $1.2B as Humanoid Race Heats Up</h2>
+
+    <p class="body-text"><span class="bold-lead">Mega-Round.</span> German startup Neura Robotics is closing a &euro;1 billion (~$1.2B) round backed by Tether Holdings, valuing the humanoid robot maker at &euro;4 billion. The investment signals that humanoid robotics is accelerating beyond traditional VC.</p>
+
+    <p class="body-text"><span class="bold-lead">AI-Robot Convergence.</span> Hyundai detailed its &ldquo;AI+Robotics&rdquo; roadmap at CES 2026&mdash;integrating LLMs into mobile robots&mdash;while expanding its partnership with Boston Dynamics. Algorized raised $13M for AI-powered industrial robot safety systems.</p>
+
+    <div class="callout">
+      <div class="callout-title">&#9654; Watchlist</div>
+      <p>Neura Robotics (&euro;4B valuation) &bull; Hyundai + Boston Dynamics &bull; Algorized ($13M Series A)</p>
+      <p>Sereact (&euro;25M Series A) &bull; MassRobotics ecosystem ($2B cumulative)</p>
+    </div>
+  </div>
+
+  <!-- WISDOM -->
+  <div class="section fade-in">
+    <div class="section-label">Wisdom of the Day</div>
+    <div class="wisdom-quote">
+      <blockquote>&ldquo;The market does not beat them. They beat themselves, because though they have brains they cannot sit tight.&rdquo;</blockquote>
+      <cite>&mdash; Jesse Livermore</cite>
+      <p class="wisdom-commentary">Today&rsquo;s bounce proves Livermore&rsquo;s point. While geopolitical chaos rages and headlines scream danger, those who can sit tight are positioned to profit. The bounce from shorts getting squeezed out isn&rsquo;t a reversal of the downtrend&mdash;it&rsquo;s a reset. The opportunity comes to those patient enough to wait for real clarity.</p>
+    </div>
+  </div>
+
+  <!-- THE BOTTOM LINE -->
+  <div class="section fade-in">
+    <div class="section-label">The Bottom Line</div>
+    <h2 class="section-headline">Geopolitical Chaos Creates Opportunity &mdash; Stay Sharp, Stay Hedged</h2>
+
+    <p class="body-text">The Iran/Strait of Hormuz crisis is the dominant driver today. Oil at $98 is real. Silver at $87.90 is real. But so is the BTC bounce above $70K&mdash;a technical break that could have legs if shorts stay liquidated. Macro uncertainty has created a bifurcated market: safe havens surging, equities struggling, crypto rebounding. CPI tomorrow becomes almost secondary to geopolitical trajectory.</p>
+
+    <div class="callout">
+      <div class="callout-title">&#9654; Actionable Takeaway</div>
+      <p>Own some gold, some silver, some crude exposure&mdash;but also hold BTC and ETH for the technical bounce. Don&rsquo;t chase the crypto rally, but don&rsquo;t fade it either if shorts are still cascading. Watch for oil to breach $100 (major psychological level). CPI tomorrow matters, but Strait of Hormuz status matters more. Stay diversified across these uncorrelated moves.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h3>Join The Market Wizards</h3>
+  <p>Get this briefing daily + live trading signals, community, and mentorship.</p>
+  <a class="cta-btn" href="https://skool.com/millionaire-trading" target="_blank">Join the Community &rarr;</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">The Market Wizards</div>
+  <div class="footer-handles">
+    <a href="https://instagram.com/tradingwizard" target="_blank">@tradingwizard</a> &bull;
+    <a href="https://youtube.com/@camillevanmerrienboer" target="_blank">@camillevanmerrienboer</a> &bull;
+    <a href="https://skool.com/millionaire-trading" target="_blank">skool.com/millionaire-trading</a>
+  </div>
+  <div class="footer-disclaimer">This briefing is for informational purposes only and does not constitute financial advice. Always do your own research before making investment decisions.</div>
+</footer>
+
+<script>
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Chart tab switching
+function showChart(group, chart, btn) {
+  // Hide all panels in this group
+  document.querySelectorAll(`[id^="${group}-"]`).forEach(p => p.classList.remove('active'));
+  // Deactivate all tabs in this group
+  btn.parentElement.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+  // Show selected
+  document.getElementById(`${group}-${chart}`).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
