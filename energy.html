@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<title>Energy Intelligence — Morning With Wizard</title>
+<meta name="description" content="Daily energy market analysis: WTI Crude Oil, Brent, and natural gas prices with OPEC production updates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #6B1525; --gold: #C9A96E; --dark: #1A1A1A; --body: #3D3D3D;
+    --muted: #888888; --light-bg: #F9F8F6; --border: #E5E2DE; --white: #FFFFFF;
+    --green: #0E7A3A; --red: #C0392B; --green-bg: #E8F5E9; --red-bg: #FFEBEE;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: var(--light-bg); color: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .topbar { background: var(--dark); padding: 10px 24px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .topbar a { color: #999; font-size: 12px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 20px; transition: all 0.2s; }
+  .topbar a:hover { color: var(--white); }
+  .topbar a.active { background: var(--maroon); color: var(--white); }
+
+  .masthead { background: var(--white); border-top: 4px solid var(--maroon); }
+  .masthead-inner { max-width: 860px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .masthead-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--dark); text-decoration: none; }
+  .masthead-nav a { font-size: 13px; color: var(--maroon); text-decoration: none; font-weight: 600; }
+  .double-rule { border: none; border-top: 1px solid var(--maroon); border-bottom: 3px solid var(--maroon); height: 6px; margin: 0; }
+
+  .content { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; background: var(--white); }
+
+  .page-header { padding: 32px 0 24px; border-bottom: 1px solid var(--border); }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 36px); font-weight: 900; color: var(--dark); margin-bottom: 4px; }
+  .page-header p { font-size: 14px; color: var(--muted); }
+  .page-header .last-update { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--gold); margin-top: 8px; }
+
+  /* Price cards */
+  .price-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+  .price-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; transition: all 0.2s; }
+  .price-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateY(-2px); }
+  .price-card .card-symbol { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--maroon); letter-spacing: 0.1em; margin-bottom: 4px; }
+  .price-card .card-price { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .price-card .card-change { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 4px; display: inline-block; }
+  .price-card .card-change.up { background: var(--green-bg); color: var(--green); }
+  .price-card .card-change.down { background: var(--red-bg); color: var(--red); }
+
+  .section { padding: 28px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--maroon); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .section-headline { font-family: 'Playfair Display', serif; font-size: clamp(20px, 3vw, 26px); font-weight: 700; color: var(--dark); line-height: 1.25; margin-bottom: 14px; }
+  .body-text { font-size: 15px; line-height: 1.7; color: var(--body); margin-bottom: 12px; }
+  .bold-lead { font-weight: 600; color: var(--dark); }
+
+  .callout { background: var(--light-bg); border-left: 4px solid var(--maroon); padding: 16px 20px; margin: 20px 0; border-radius: 0 4px 4px 0; }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--maroon); margin-bottom: 8px; }
+  .callout p { font-size: 14px; line-height: 1.6; color: var(--body); margin-bottom: 4px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .chart-container { margin: 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+  .chart-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-top: 16px; }
+  .chart-tab { padding: 8px 20px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+  .chart-tab:hover { color: var(--dark); }
+  .chart-tab.active { color: var(--maroon); border-bottom-color: var(--maroon); }
+  .chart-panel { display: none; }
+  .chart-panel.active { display: block; }
+
+  .footer { max-width: 860px; margin: 0 auto; text-align: center; padding: 24px; border-top: 1px solid var(--border); background: var(--white); }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--maroon); margin-bottom: 6px; }
+  .footer-handles { font-size: 12px; color: var(--gold); margin-bottom: 8px; }
+  .footer-handles a { color: var(--gold); text-decoration: none; }
+  .footer-disclaimer { font-size: 11px; color: #BBB; font-style: italic; max-width: 600px; margin: 0 auto; }
+
+  @media (max-width: 640px) {
+    .price-cards { grid-template-columns: 1fr; }
+    .topbar { gap: 12px; }
+    .topbar a { font-size: 11px; padding: 4px 8px; }
+    .masthead-inner { flex-direction: column; gap: 8px; text-align: center; }
+    .content { padding: 0 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <a href="index.html">Today's Briefing</a>
+  <a href="crypto.html">Crypto</a>
+  <a href="metals.html">Metals</a>
+  <a href="energy.html" class="active">Energy</a>
+  <a href="macro.html">Macro</a>
+  <a href="archive.html">Archive</a>
+</nav>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="index.html" class="masthead-title">Morning With Wizard</a>
+    <nav class="masthead-nav"><a href="https://skool.com/millionaire-trading" target="_blank">Join Skool &rarr;</a></nav>
+  </div>
+</header>
+<hr class="double-rule">
+
+<main class="content">
+
+  <div class="page-header">
+    <h1>Energy Intelligence</h1>
+    <p>WTI Crude Oil analysis and OPEC developments — updated daily.</p>
+    <div class="last-update">Last updated: March 10, 2026 &bull; Edition #248</div>
+  </div>
+
+  <!-- PRICE CARDS -->
+  <div class="price-cards">
+    <div class="price-card">
+      <div class="card-symbol">WTI OIL / USD</div>
+      <div class="card-price">$98.50</div>
+      <span class="card-change up">+47.6% (24h)</span>
+    </div>
+    <div class="price-card">
+      <div class="card-symbol">BRENT OIL / USD</div>
+      <div class="card-price">$120.00</div>
+      <span class="card-change up">+71.3% (24h)</span>
+    </div>
+    <div class="price-card">
+      <div class="card-symbol">NAT GAS / USD</div>
+      <div class="card-price">$4.85</div>
+      <span class="card-change up">+13.3% (24h)</span>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="section">
+    <div class="section-label">Live Charts</div>
+    <div class="chart-tabs">
+      <button class="chart-tab active" onclick="showChart('energy','wti',this)">WTI</button>
+      <button class="chart-tab" onclick="showChart('energy','brent',this)">BRENT</button>
+    </div>
+    <div id="energy-wti" class="chart-panel active">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv&symbol=TVC:USOIL&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&locale=en" style="width:100%;height:450px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <div id="energy-brent" class="chart-panel">
+      <div class="chart-container">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv&symbol=TVC:UKOIL&interval=D&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=f1f3f6&theme=light&style=1&timezone=exchange&withdateranges=1&showpopupbutton=0&locale=en" style="width:100%;height:450px;border:none;" allowtransparency="true"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYSIS -->
+  <div class="section">
+    <div class="section-label">Today's Analysis</div>
+    <h2 class="section-headline">Oil Explodes as Strait of Hormuz Closes — Brent Touches $120</h2>
+
+    <p class="body-text"><span class="bold-lead">Iran Crisis Unleashed.</span> WTI exploded +47.6% to $98.50 and Brent spiked +71.3% to $120.00 on Iran tensions and the closure of the Strait of Hormuz. Through that chokepoint flows 20%–25% of the world&rsquo;s seaborne oil. This is a genuine supply shock in motion.</p>
+
+    <p class="body-text"><span class="bold-lead">Supply Disruption Real.</span> Tankers are rerouting, insurers are repricing risk, and strategic reserves are being assessed. If the closure lasts more than days, we could see structural shortages and $120+ WTI sustained. Brent already touching $120 signals the market is pricing in a severe scenario.</p>
+
+    <p class="body-text"><span class="bold-lead">Natural Gas Up 13.3%.</span> Nat Gas surged to $4.85 as LNG export terminals and regional infrastructure face elevated geopolitical risk. Heating season tail risk + supply concerns = another leg higher.</p>
+
+    <p class="body-text"><span class="bold-lead">Refiner Margins Explode.</span> Crack spreads (WTI-product spreads) are blowing out. Downstream players face margin compression while upstream producers are thrilled. OPEC is in no rush to increase production in this environment.</p>
+  </div>
+
+  <!-- KEY LEVELS -->
+  <div class="section">
+    <div class="section-label">Key Levels</div>
+    <div class="callout">
+      <div class="callout-title">&#9654; Support &amp; Resistance</div>
+      <p><strong>WTI Oil</strong> &mdash; Support: $95.00 | Resistance: $110.00+ (if Strait closure persists)</p>
+      <p><strong>Brent Oil</strong> &mdash; Support: $115.00 | Resistance: $140.00+ (extreme scenario)</p>
+    </div>
+  </div>
+
+  <!-- OPEC+ OUTLOOK -->
+  <div class="section">
+    <div class="section-label">Strait of Hormuz Crisis — Supply Shock Scenario</div>
+    <div class="callout">
+      <div class="callout-title">&#9654; Geopolitical Supply Risk</div>
+      <p><strong>Strait Closure Impact:</strong> A 3–7 day closure = massive supply shock. 15–20 million bbl/day normally transits daily. Immediate spot prices have spiked to $98 WTI/$120 Brent. Extended closure (14+ days) could push WTI toward $120–$150.</p>
+      <p><strong>OPEC Response:</strong> Unlikely to increase production during chaos. Rather, OPEC is collecting windfall profits. The group will wait for geopolitical stabilization before easing supply.</p>
+      <p><strong>Market Implications:</strong> Inflation shock. Airlines and shippers face immediate cost pressures. Global growth forecasts will be cut. This is stagflationary—and central banks cannot fight it with rate cuts.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-brand">The Market Wizards</div>
+  <div class="footer-handles">
+    <a href="https://instagram.com/tradingwizard">@tradingwizard</a> &bull;
+    <a href="https://youtube.com/@camillevanmerrienboer">@camillevanmerrienboer</a> &bull;
+    <a href="https://skool.com/millionaire-trading">skool.com/millionaire-trading</a>
+  </div>
+  <div class="footer-disclaimer">For informational purposes only. Not financial advice.</div>
+</footer>
+
+<script>
+function showChart(group, chart, btn) {
+  document.querySelectorAll(`[id^="${group}-"]`).forEach(p => p.classList.remove('active'));
+  btn.parentElement.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`${group}-${chart}`).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
