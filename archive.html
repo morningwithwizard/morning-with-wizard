@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive — Morning With Wizard</title>
+<meta name="description" content="Browse past editions of Morning With Wizard, the daily market intelligence briefing by The Market Wizards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #6B1525;
+    --maroon-light: #8B2035;
+    --gold: #C9A96E;
+    --gold-light: #D4B97E;
+    --dark: #1A1A1A;
+    --body: #3D3D3D;
+    --muted: #888888;
+    --light-bg: #F9F8F6;
+    --border: #E5E2DE;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--light-bg);
+    color: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === MASTHEAD === */
+  .masthead {
+    background: var(--white);
+    border-top: 5px solid var(--maroon);
+  }
+
+  .masthead-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+  }
+
+  .edition-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .edition-bar a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .edition-bar a:hover { text-decoration: underline; }
+
+  .masthead-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: 900;
+    color: var(--dark);
+    text-align: center;
+    padding: 20px 0 8px;
+    line-height: 1.1;
+  }
+
+  .masthead-title a {
+    color: var(--dark);
+    text-decoration: none;
+  }
+
+  .masthead-subtitle {
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 16px;
+  }
+
+  .double-rule {
+    border: none;
+    border-top: 1px solid var(--maroon);
+    border-bottom: 3px solid var(--maroon);
+    height: 6px;
+    margin: 0;
+  }
+
+  /* === CONTENT === */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+    background: var(--white);
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  .page-desc {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  /* === MONTH NAVIGATION === */
+  .month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .month-nav button {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--maroon);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .month-nav button:hover {
+    background: var(--maroon);
+    color: var(--white);
+    border-color: var(--maroon);
+  }
+
+  .month-nav .current-month {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+    min-width: 200px;
+    text-align: center;
+  }
+
+  /* === CALENDAR === */
+  .calendar {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--maroon);
+  }
+
+  .calendar-header span {
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .calendar-day {
+    aspect-ratio: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    margin: -0.5px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .calendar-day .day-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .calendar-day.empty {
+    background: var(--light-bg);
+  }
+
+  .calendar-day.has-edition {
+    cursor: pointer;
+    background: var(--white);
+  }
+
+  .calendar-day.has-edition:hover {
+    background: #FDF6F0;
+    transform: scale(1.02);
+    z-index: 1;
+    box-shadow: 0 2px 12px rgba(107, 21, 37, 0.1);
+  }
+
+  .calendar-day.has-edition .day-number {
+    color: var(--dark);
+    font-weight: 700;
+  }
+
+  .calendar-day.has-edition .edition-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--maroon);
+    border-radius: 50%;
+    margin-top: 4px;
+  }
+
+  .calendar-day.today {
+    background: #FDF6F0;
+    border-color: var(--gold);
+    border-width: 2px;
+  }
+
+  .calendar-day.today .day-number {
+    color: var(--maroon);
+    font-weight: 700;
+  }
+
+  .calendar-day.future .day-number {
+    color: #DDD;
+  }
+
+  /* === EDITION LIST === */
+  .edition-list {
+    margin-top: 32px;
+  }
+
+  .edition-list h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--maroon);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .edition-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .edition-item:hover {
+    background: var(--light-bg);
+    border-color: var(--border);
+  }
+
+  .edition-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--maroon);
+    min-width: 100px;
+  }
+
+  .edition-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    flex: 1;
+  }
+
+  .edition-arrow {
+    color: var(--gold);
+    font-size: 18px;
+    margin-left: 12px;
+  }
+
+  /* === BACK LINK === */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--maroon);
+    text-decoration: none;
+    margin-bottom: 24px;
+  }
+
+  .back-link:hover { text-decoration: underline; }
+
+  /* === FOOTER === */
+  .footer {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    color: var(--maroon);
+    margin-bottom: 6px;
+  }
+
+  .footer-handles {
+    font-size: 12px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .footer-handles a { color: var(--gold); text-decoration: none; }
+  .footer-handles a:hover { text-decoration: underline; }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: #BBBBBB;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 640px) {
+    .content { padding: 20px 16px 40px; }
+    .calendar-day { aspect-ratio: 1; }
+    .calendar-header span { font-size: 10px; padding: 8px 4px; }
+    .calendar-day .day-number { font-size: 13px; }
+    .edition-item { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .month-nav .current-month { font-size: 18px; min-width: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="edition-bar">
+      <a href="index.html">&larr; Today's Briefing</a>
+      <span>Archive</span>
+      <a href="https://skool.com/millionaire-trading" target="_blank">skool.com/millionaire-trading</a>
+    </div>
+    <h1 class="masthead-title"><a href="index.html">Morning With Wizard</a></h1>
+    <p class="masthead-subtitle">Briefing Archive</p>
+  </div>
+  <hr class="double-rule">
+</header>
+
+<main class="content">
+
+  <a class="back-link" href="index.html">&larr; Back to today's briefing</a>
+
+  <h2 class="page-title">Past Editions</h2>
+  <p class="page-desc">Browse every Morning With Wizard briefing. Click any date to read that edition.</p>
+
+  <!-- MONTH NAV -->
+  <div class="month-nav">
+    <button id="prev-month">&larr; Prev</button>
+    <span class="current-month" id="current-month">March 2026</span>
+    <button id="next-month">Next &rarr;</button>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="calendar">
+    <div class="calendar-header">
+      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+    </div>
+    <div class="calendar-body" id="calendar-body"></div>
+  </div>
+
+  <!-- EDITION LIST FOR CURRENT MONTH -->
+  <div class="edition-list" id="edition-list">
+    <h3>Editions This Month</h3>
+    <div id="edition-items"></div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">The Market Wizards</div>
+  <div class="footer-handles">
+    <a href="https://instagram.com/tradingwizard" target="_blank">@tradingwizard</a> &bull;
+    <a href="https://youtube.com/@camillevanmerrienboer" target="_blank">@camillevanmerrienboer</a> &bull;
+    <a href="https://skool.com/millionaire-trading" target="_blank">skool.com/millionaire-trading</a>
+  </div>
+  <div class="footer-disclaimer">This briefing is for informational purposes only and does not constitute financial advice.</div>
+</footer>
+
+<script>
+// === EDITION DATA ===
+// This object is updated by the scheduled task each day
+// Format: { "2026-03-09": { title: "Headline", edition: 247 } }
+const EDITIONS = {
+  "2026-03-09": { title: "Patience Is the Play — Watch CPI, Accumulate Conviction", edition: 247 }
+};
+
+// === CALENDAR LOGIC ===
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const today = new Date();
+let currentYear = 2026;
+let currentMonth = 2; // March (0-indexed)
+
+function getEditionUrl(year, month, day) {
+  const mm = String(month + 1).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  return `editions/${year}/${mm}/${dd}.html`;
+}
+
+function getDateKey(year, month, day) {
+  const mm = String(month + 1).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  return `${year}-${mm}-${dd}`;
+}
+
+function renderCalendar() {
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const todayDate = today.getDate();
+  const todayMonth = today.getMonth();
+  const todayYear = today.getFullYear();
+
+  document.getElementById('current-month').textContent = `${months[currentMonth]} ${currentYear}`;
+
+  let html = '';
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) {
+    html += '<div class="calendar-day empty"></div>';
+  }
+
+  // Days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateKey = getDateKey(currentYear, currentMonth, day);
+    const hasEdition = EDITIONS[dateKey];
+    const isToday = (day === todayDate && currentMonth === todayMonth && currentYear === todayYear);
+    const isFuture = new Date(currentYear, currentMonth, day) > today;
+
+    let classes = 'calendar-day';
+    if (hasEdition) classes += ' has-edition';
+    if (isToday) classes += ' today';
+    if (isFuture) classes += ' future';
+
+    if (hasEdition) {
+      const url = getEditionUrl(currentYear, currentMonth, day);
+      html += `<div class="${classes}" onclick="window.location.href='${url}'" title="Edition #${hasEdition.edition}: ${hasEdition.title}">
+        <span class="day-number">${day}</span>
+        <span class="edition-dot"></span>
+      </div>`;
+    } else {
+      html += `<div class="${classes}"><span class="day-number">${day}</span></div>`;
+    }
+  }
+
+  document.getElementById('calendar-body').innerHTML = html;
+
+  // Render edition list
+  let listHtml = '';
+  for (let day = daysInMonth; day >= 1; day--) {
+    const dateKey = getDateKey(currentYear, currentMonth, day);
+    const edition = EDITIONS[dateKey];
+    if (edition) {
+      const url = getEditionUrl(currentYear, currentMonth, day);
+      const dateStr = new Date(currentYear, currentMonth, day).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      listHtml += `<a class="edition-item" href="${url}">
+        <span class="edition-date">${dateStr}</span>
+        <span class="edition-title">#${edition.edition}: ${edition.title}</span>
+        <span class="edition-arrow">&rarr;</span>
+      </a>`;
+    }
+  }
+
+  if (!listHtml) {
+    listHtml = '<p style="color: #888; font-size: 14px; padding: 20px 0;">No editions published this month yet.</p>';
+  }
+
+  document.getElementById('edition-items').innerHTML = listHtml;
+}
+
+// Navigation
+document.getElementById('prev-month').addEventListener('click', () => {
+  currentMonth--;
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  renderCalendar();
+});
+
+document.getElementById('next-month').addEventListener('click', () => {
+  currentMonth++;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  renderCalendar();
+});
+
+renderCalendar();
+</script>
+
+</body>
+</html>
